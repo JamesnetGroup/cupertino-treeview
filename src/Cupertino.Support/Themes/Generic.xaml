@@ -1,0 +1,10 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Cupertino.Support;component/Themes/Units/FileIcon.xaml"/>
+        <ResourceDictionary Source="/Cupertino.Support;component/Themes/Units/ChevronSwitch.xaml"/>
+        <ResourceDictionary Source="/Cupertino.Support;component/Themes/Units/CupertinoTreeItem.xaml"/>
+        <ResourceDictionary Source="/Cupertino.Support;component/Themes/Units/CupertinoTreeView.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
