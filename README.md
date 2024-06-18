@@ -281,3 +281,127 @@ GetFiles(root, source, depth);
 
 Files = source;
 ```
+翻译如下：
+
+---
+
+The logic included in the constructor is as follows:
+
+- `fileCreator.Create`: Generates sample demo data in the My Documents path.
+- `depth`: Initializes the depth of the first folder/file item to 0.
+- `root`: Base folder in the My Documents path (you can configure another folder here).
+- `source`: Creates a new list.
+- `GetFiles`: Starts recursive traversal of folders/files based on the root My Documents path.
+- `Files = source`: Assigns the source to Files after the recursive calls are completed.
+
+This completes all preparations for data configuration and TreeView ItemsSource data binding through the ViewModel (MVVM pattern).
+
+## DataContext Binding
+
+In this Cupertino Treeview tutorial, we don't use MVVM-related framework features like Prism. Instead, we directly bind the ViewModel in the window's constructor as follows:
+
+```csharp
+namespace Cupertino.Forms.UI.Views
+{
+    public class CupertinoWindow : Window
+    {
+        static CupertinoWindow()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CupertinoWindow), 
+                new FrameworkPropertyMetadata(typeof(CupertinoWindow)));
+        }
+
+        public CupertinoWindow()
+        {
+            DataContext = new CupertinoWindowViewModel();
+        }
+    }
+}
+```
+
+If the data is not bound when running, check this part where the ViewModel is bound to the DataContext.
+
+Now, the major preparations in the code-behind are complete.
+
+## Cupertino TreeView ControlTemplate
+
+Implementing the TreeView ControlTemplate is very similar to implementing a ListBox. The most important element is the ItemsPresenter. When adding layout elements like headers or pagination, this is where you implement them. In this tutorial, we include a header, so the ItemsPresenter and header are implemented within the TreeView Template.
+
+Below is the complete implementation of the CupertinoTreeView CustomControl Template.
+
+_CupertinoTreeView.xaml_
+
+```xaml
+<Style TargetType="{x:Type units:CupertinoTreeView}">
+    <Setter Property="Width" Value="800"/>
+    <Setter Property="BorderBrush" Value="#AAAAAA"/>
+    <Setter Property="BorderThickness" Value="1"/>
+    <Setter Property="Margin" Value="100"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type units:CupertinoTreeView}">
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <Grid Grid.IsSharedSizeScope="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" MinWidth="400" SharedSizeGroup="Path"/>
+                            <ColumnDefinition Width="Auto" MinWidth="100" SharedSizeGroup="Size"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Name" 
+                               Background="#FAFAFA" Padding="10" 
+                               BorderBrush="#AAAAAA" BorderThickness="0 0 1 1"/>
+                        <Label Grid.Column="1" Content="Path" 
+                               Background="#FAFAFA" Padding="10" 
+                               BorderBrush="#AAAAAA" BorderThickness="0 0 1 1"/>
+                        <Label Grid.Column="2" Content="Size" 
+                               Background="#FAFAFA" Padding="10" 
+                               BorderBrush="#AAAAAA" BorderThickness="0 0 1 1"/>
+                        <units:MagicStackPanel Grid.Row="1" Grid.ColumnSpan="3" 
+                            VerticalAlignment="Top"
+                            ItemHeight="{Binding ElementName=Items, Path=ActualHeight}">
+                        </units:MagicStackPanel>
+                        <ItemsPresenter x:Name="Items" Grid.Row="1" Grid.ColumnSpan="3" 
+                                        VerticalAlignment="Top"/>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+```
+
+The key points here are the configuration of the header and the placement of the ItemsPresenter element. The TreeView control does not inherently provide elements like headers. From a user interface perspective, it is uncommon to display headers in a TreeView. However, if needed, you can implement a header directly as shown here.
+
+_Header Positioned Above ItemsPresenter_
+
+![](https://jamesnetdev.blob.core.windows.net/articleimages/e263863c-2009-4d48-a3b4-539d7aa2b285.png)
+
+To ensure that the column sizes of TreeViewItem data items generated in the header and ItemsPresenter are consistent, we use the SharedSizeGroup property (Path, Size). These elements will also appear later in the TreeViewItem content.
+
+In conclusion, configuring the header and placing the ItemsPresenter for child elements is crucial in implementing the TreeView control's Template. This is relatively simpler compared to implementing TreeViewItem.
+
+## Cupertino TreeViewItem ControlTemplate
+
+Finally, we come to the most important core element of the TreeView control: implementing the TreeViewItem Template.
+
+As mentioned earlier, a TreeViewItem, despite being a child, also acts as a parent, inheriting from ItemsControl. Therefore, its Template needs to include an ItemsPresenter for its children, similar to ListBoxItem but accommodating a hierarchical structure.
+
+Although it may seem complex, the layout can be simplified as follows:
+
+```
+<Border>
+    <StackPanel>       
+        <!-- 파일명, 파일 크기를 비롯한 내용 -->
+        <Grid>
+        </Grid>
+        <!-- 자식 요소 -->
+         <ItemsPresenter/>
+    </StackPanel>
+</Border>
+```
