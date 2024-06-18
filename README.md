@@ -47,7 +47,6 @@ _TreeViewItem Template_
     </Setter>
 </Style>
 ```
- ---
 
 By comparing the two template source codes of TreeView and TreeViewItem, we can see the structural similarity where both use ItemsSource and ItemsPresenter. These mechanistic elements enable the TreeView control to expand freely and flexibly without any hierarchical constraints.
 
@@ -128,42 +127,46 @@ public class FileCreator
 }
 ```
 
-The source code shows the logic to create various folders and files based on the My Documents path. We've included a variety of items to form a hierarchical directory structure with various file extensions. Feel free to create additional files as needed.
+By examining the source code, you can see that the logic creates multiple folders and files based on the My Documents path (Environment.SpecialFolder.MyDocuments). Various items were created to form a hierarchical directory structure and include different file extensions. Feel free to create additional files as needed.
 
-This creation logic ensures the folders and files are safely generated within My Documents.
+This creation logic ensures that the folders and files are safely generated within My Documents.
 
-MVVM Pattern
+## MVVM Pattern
+
 In this tutorial, we will set up the ViewModel for the MVVM pattern for the first time. The MVVM pattern is highly relied upon in WPF and plays a significant role.
 
 However, we didn't cover it in the previous five tutorials because we intended to first provide a thorough understanding of the foundational elements of WPF, such as CustomControl, ControlTemplate, and ContentControl/ItemsControl, before introducing MVVM.
 
 Therefore, if you want to strengthen your WPF foundation, we recommend studying the five WPF tutorial series in order before proceeding.
 
-Creating a List Based on Generated Folders/Files in the ViewModel
+## Creating a List Based on Generated Folders/Files in the ViewModel
+
 This tutorial introduces the core of the MVVM pattern: the ViewModel. We'll create a ViewModel class that uses the physical path defined in the FileCreator.cs class's BasePath. Using the .NET Directory class methods GetDirectories and GetFiles, we'll retrieve all folder/file lists and compose the FileItem data.
 
 First, we create the List property to bind to the TreeView's ItemsSource.
 
-Files Property to Bind to ItemsSource
+_Files Property to Bind to ItemsSource_
 
-csharp
-코드 복사
+```csharp
 public List<FileItem> Files { get; set; }
-It is notable that there is no OnPropertyChanged processing for the Files property. This implies that the Files list will be created in the ViewModel's constructor. Therefore, using init instead of set is also a good approach.
+```
 
-Using init Instead
+It is notable that there is no OnPropertyChanged processing for the Files property. This implies that the Files list will be created in the ViewModel's constructor. Therefore, using `init` instead of `set` is also a good approach.
 
-csharp
-코드 복사
+_Using init Instead_
+
+```csharp
 public List<FileItem> Files { get; init; }
+```
+
 Although a minor rule, such elements contribute to writing good code.
 
 Next, we need to implement a method that recursively traverses folders and creates the folder/file list as FileItem models.
 
-Implementing GetFiles Method
 
-csharp
-코드 복사
+_Implementing GetFiles Method_
+
+```csharp
 private void GetFiles(string root, List<FileItem> source, int depth)
 {
     string[] dirs = Directory.GetDirectories(root);
@@ -197,9 +200,11 @@ private void GetFiles(string root, List<FileItem> source, int depth)
         source.Add(item);
     }
 }
-In this method, the target folder/file items are recursively traversed only if they are directories. The recursive calls occur within the foreach loop for dirs, where children are added through the Children property.
+```
 
-The next notable aspect is Depth. This property calculates the depth of the current folder/file item, which is essential for visual hierarchical representation in XAML. The recursive method increases the Depth value with each call, distinguishing the hierarchy. Other elements mainly serve for visual data representation.
+The first point to note in this source code is that the target folder/file items are recursively traversed only if they are directories. The recursive calls occur within the `foreach` loop for `dirs`, where children are continuously added through the `Children` property.
+
+Next is the Depth property. This property pre-calculates how many levels deep the current folder/file is. While the data is logically hierarchical and can be distinguished in XAML during the design process of the TreeViewItem Template, it is essential to know the item's level visually. Therefore, each time the recursive method is called, the Depth value increases to differentiate the hierarchy. Other elements are primarily for visual data representation, so they can be reviewed briefly.
 
 ## Reviewing the Complete ViewModel Code
 
@@ -281,10 +286,6 @@ GetFiles(root, source, depth);
 
 Files = source;
 ```
-翻译如下：
-
----
-
 The logic included in the constructor is as follows:
 
 - `fileCreator.Create`: Generates sample demo data in the My Documents path.
@@ -380,7 +381,7 @@ The key points here are the configuration of the header and the placement of the
 
 _Header Positioned Above ItemsPresenter_
 
-![](https://jamesnetdev.blob.core.windows.net/articleimages/e263863c-2009-4d48-a3b4-539d7aa2b285.png)
+
 
 To ensure that the column sizes of TreeViewItem data items generated in the header and ItemsPresenter are consistent, we use the SharedSizeGroup property (Path, Size). These elements will also appear later in the TreeViewItem content.
 
@@ -394,14 +395,139 @@ As mentioned earlier, a TreeViewItem, despite being a child, also acts as a pare
 
 Although it may seem complex, the layout can be simplified as follows:
 
-```
+```xaml
 <Border>
-    <StackPanel>       
-        <!-- 파일명, 파일 크기를 비롯한 내용 -->
+    <StackPanel>
+        <!-- Content such as file name, file size -->
         <Grid>
         </Grid>
-        <!-- 자식 요소 -->
-         <ItemsPresenter/>
+        <!-- Child elements -->
+        <ItemsPresenter/>
     </StackPanel>
 </Border>
 ```
+
+The TreeViewItem Template must properly place not only the content but also the ItemsPresenter element. This ensures that when hierarchical data is bound to ItemsSource, the TreeView is correctly structured.
+
+If you implement the TreeView control without properly understanding the unique mechanism of TreeViewItem, it can be relatively challenging.
+
+> This tutorial video focuses on thoroughly understanding the concept of the TreeView control, offering over an hour of detailed content. Repeated practice will be beneficial.
+
+Below is the complete implementation of the TreeViewItem Template.
+
+_CupertinoTreeItem.xaml_
+
+```xaml
+<Style TargetType="{x:Type units:CupertinoTreeItem}">
+    <Setter Property="SelectionCommand" Value="{Binding RelativeSource={RelativeSource AncestorType=units:CupertinoTreeView}, Path=DataContext.SelectionCommand}"/>
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="ItemsSource" Value="{Binding Children}"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type units:CupertinoTreeItem}">
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <StackPanel>
+                        <Grid x:Name="Item" Background="{TemplateBinding Background}" Height="36">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" MinWidth="200" SharedSizeGroup="Path"/>
+                                <ColumnDefinition Width="Auto" MinWidth="100" SharedSizeGroup="Size"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Margin="{Binding Depth, Converter={cnvts:DepthConverter}}">
+                                <units:ChevronSwitch x:Name="Chevron" Margin="10" IsChecked="{Binding RelativeSource={RelativeSource Templatedparent}, Path=IsExpanded}"/>
+                                <units:FileIcon Type="{Binding Type}" Margin="10" Extension="{Binding Extension}"/>
+                                <TextBlock Text="{Binding Name}" Margin="10"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{Binding Path}" Margin="10"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Size, Converter={cnvts:SizeConverter}}" Margin="10"/>
+                        </Grid>
+
+                        <ItemsPresenter x:Name="Items" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="True">
+                        <Setter TargetName="Items" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding ElementName=Item, Path=IsMouseOver}" Value="True">
+                        <Setter TargetName="Item" Property="Background" Value="#D1E3FF"/>
+                    </DataTrigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter TargetName="Item" Property="Background" Value="#004EFF"/>
+                        <Setter TargetName="Item" Property="TextBlock.Foreground" Value="#FFFFFF"/>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding Type}" Value="File">
+                        <Setter TargetName="Chevron" Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+```
+
+This implementation includes displaying the file name, path, file size, extension icon, and the ItemsPresenter for placing child elements.
+
+Next, check the generated path to ensure the actual directory matches within My Documents.
+
+
+
+## Design Elements
+
+No special design elements were used in this tutorial. A simple combination of Border's Background/BorderBrush colors and layout design elements like Margin/Padding can produce excellent results.
+
+The key is consistent Margin and Padding for all visual elements. Repeated adjustments are necessary to achieve a visually appealing control. Valuing this practice will enhance your visual design skills.
+
+## Depth Converter
+
+Since the depth of all file items has already been calculated, we can convert this depth into a left margin for each item to visually represent the parent-child hierarchy. By utilizing the Depth value in TreeView, you can set a left margin proportional to the Depth, clearly displaying the hierarchical relationships between items.
+
+Here is the DepthConverter inheriting from IValueConverter.
+
+_DepthConverter.cs_
+
+```csharp
+public class DepthConverter : MarkupExtension, IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        int depth = (int)value;
+        Thickness margin = new Thickness(depth * 20, 0, 0, 0);
+        return margin;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
+    }
+}
+```
+
+This code includes logic to convert the Depth value to a Thickness structure for calculating the left margin. It also inherits from MarkupExtension for easier use in XAML.
+
+_Using DepthConverter_
+
+```xaml
+<StackPanel Orientation="Horizontal" Margin="{Binding Depth, Converter={local:DepthConverter}}">
+```
+
+The final result, with the Depth value applied as a left margin, can be seen in the image below.
+
+_Depth Applied as Left Margin_
+
+The image clearly shows how the Depth value is applied, using a red dividing line for clarity. Experiment with changing the `depth * 20` value in the DepthConverter logic to see the effects.
+
+## Conclusion
+
+Although not covered in this article, the tutorial video explains the Depth concept in detail using animations. It also includes methods for handling selected TreeView items using ICommand in the ViewModel and solving issues related to event bubbling.
+
+The tutorial video is over an hour long, packed with detailed and in-depth content. You can watch it with English narration on YouTube and Chinese narration on Bilibili. Please support by subscribing, liking, and sharing the video to help more developers. The source code is shared as open-source on [GitHub](https://github.com/vickyqu115/cupertino-treeview), and we welcome your support through Stars, Forks, and Discussions.
+
+Thank you.
