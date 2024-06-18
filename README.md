@@ -1,3 +1,4 @@
+![CupertinoGif1](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/b3f3aacd-6d96-4db9-b1d5-8bdd6cf3e2e0)
 
 This article covers the content of Vicky's sixth WPF tutorial series video, which provides a detailed technical tutorial lasting an hour, available for free on YouTube and Bilibili. Additionally, the source code is shared on [GitHub](https://github.com/vickyqu115/cupertino-treeview). We welcome your support through [Stars](https://github.com/vickyqu115/cupertino-treeview/stargazers), participation via [Forks](https://github.com/vickyqu115/cupertino-treeview/forks), and communication through [Discussions](https://github.com/vickyqu115/cupertino-treeview/discussions).
 
@@ -472,6 +473,7 @@ This implementation includes displaying the file name, path, file size, extensio
 
 Next, check the generated path to ensure the actual directory matches within My Documents.
 
+![CupertinoPNG2](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/dfd5cdd1-650b-4314-8756-3693f5d743a1)
 
 
 ## Design Elements
@@ -521,6 +523,8 @@ _Using DepthConverter_
 The final result, with the Depth value applied as a left margin, can be seen in the image below.
 
 _Depth Applied as Left Margin_
+
+![CupertinoPGNG3](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/d9a2e99e-3202-49df-a630-b3e4a3f78d52)
 
 The image clearly shows how the Depth value is applied, using a red dividing line for clarity. Experiment with changing the `depth * 20` value in the DepthConverter logic to see the effects.
 
