@@ -200,3 +200,84 @@ private void GetFiles(string root, List<FileItem> source, int depth)
 In this method, the target folder/file items are recursively traversed only if they are directories. The recursive calls occur within the foreach loop for dirs, where children are added through the Children property.
 
 The next notable aspect is Depth. This property calculates the depth of the current folder/file item, which is essential for visual hierarchical representation in XAML. The recursive method increases the Depth value with each call, distinguishing the hierarchy. Other elements mainly serve for visual data representation.
+
+## Reviewing the Complete ViewModel Code
+
+Now, let's review the complete ViewModel code to see how the Files property is created at the constructor stage.
+
+_CupertinoViewModel.cs_
+
+```csharp
+public partial class CupertinoWindowViewModel : ObservableBase
+{
+    public List<FileItem> Files { get; set; }
+    public CupertinoWindowViewModel()
+    {
+        FileCreator fileCreator = new();
+        fileCreator.Create();
+
+        int depth = 0;
+        string root = fileCreator.BasePath + "/Vicky";
+        List<FileItem> source = new();
+
+        GetFiles(root, source, depth);
+
+        Files = source;
+    }
+
+    private void GetFiles(string root, List<FileItem> source, int depth)
+    {
+        string[] dirs = Directory.GetDirectories(root);
+        string[] files = Directory.GetFiles(root);
+
+        foreach (string dir in dirs)
+        {
+            FileItem item = new();
+            item.Name = Path.GetFileNameWithoutExtension(dir);
+            item.Path = dir;
+            item.Size = null;
+            item.Type = "Folder";
+            item.Depth = depth;
+            item.Children = new();
+
+            source.Add(item);
+
+            GetFiles(dir, item.Children, depth + 1);
+        }
+
+        foreach (string file in files)
+        {
+            FileItem item = new();
+            item.Name = Path.GetFileNameWithoutExtension(file);
+            item.Path = file;
+            item.Size = new FileInfo(file).Length;
+            item.Type = "File";
+            item.Extension = new FileInfo(file).Extension;
+            item.Depth = depth;
+
+            source.Add(item);
+        }
+    }
+}
+```
+
+By examining the source code, you can see that all the preliminary work for structuring the data is implemented in the constructor.
+
+The constructor handles setting the binding properties before the ViewModel is bound to the Window's DataContext. While it is preferable to load large amounts of data asynchronously, in this tutorial, we handle it within the constructor due to the small data size for constructing the TreeView. Understanding and using these characteristics will help you implement MVVM-based WPF applications more effectively.
+
+Now, let's delve into the part where the Files property is defined in the ViewModel's constructor.
+
+_Constructor_
+
+```csharp
+FileCreator fileCreator = new();
+fileCreator.Create();
+
+int depth = 0;
+string root = fileCreator.BasePath + "/Vicky";
+List<FileItem> source = new();
+
+GetFiles(root, source, depth);
+
+Files = source;
+```
