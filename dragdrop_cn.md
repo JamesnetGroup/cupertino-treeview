@@ -1,5 +1,6 @@
 ## 在 TreeView 控件中通过Drag Drop移动位置（With Cupertino TreeView)
-![image](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/bb6f9186-65d0-48d8-8a1c-fa6edaf12146)
+![CupertinoTreeViewDragDrop_Preview](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/f273b943-7348-479b-8c9a-c3ec70826099)
+
 
 本文将解释在 TreeView 控件中进行Drag Drop操作的过程。内容基于我们的第六个 WPF 教程视频 "Cupertino TreeView" 的源代码，因此建议先查看 GitHub 上公开的 cupertino-treeview 源代码。另外如果你还没有观看教程视频，可以通过 [BiliBili](https://www.bilibili.com/video/BV1xz42187wV) 免费观看。
 
