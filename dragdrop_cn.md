@@ -69,3 +69,62 @@ private void CupertinoTreeItem_MouseMove(object sender, MouseEventArgs e)
 e.Handled = true;
 ```
 如果忽略了这一点，不论拖动哪个对象，最终都会选择最上层的 CupertinoTreeItem。当然在了解事件冒泡事件的特性后，你就能很轻松地察觉到这个问题。
+
+## Files 类型变更：ObservableCollection
+
+CupertinoTreeView 控件绑定 `List<TreeItem>` 类型的 Files collection到 ItemsSource。因此，即使数据位置发生变化，UI 也不会实时更新。为了解决这个问题，我们需要将 CupertinoTreeView 控件的 ItemsSource 绑定的 Files 类型从 ‘List’ 更改为 ‘ObservableCollection’，来确保项目变更时 UI 也能实时更新。
+
+在 `CupertinoWindowViewModel.cs` 中更改类型：
+
+```csharp
+public partial class CupertinoWindowViewModel : ObservableBase
+{
+    public ObservableCollection<FileItem> Files { get; set; }
+    ...
+}
+```
+
+由于 Files 类型的更改，所有引用和定义这个类型的部分都会出现错误，这些部分我们也需要更改为 ObservableCollection 类型。
+
+## Children 类型变更：ObservableCollection
+
+接下来，在 FileItem 模型中，`List<FileItem>` 类型的 ‘Children’ 属性也需要像 Files 一样更改为 ‘ObservableCollection’。
+
+```csharp
+public class FileItem
+{
+    public string Name { get; set; }
+    public string Path { get; set; }
+    public string Type { get; set; }
+    public string Extension { get; set; }
+    public long? Size { get; set; }
+    public int Depth { get; set; }
+    public ObservableCollection<FileItem> Children { get; set; }
+}
+```
+
+由于 Children 属性也绑定到 CupertinoTreeItem 的 ItemsSource，所以在递归的 TreeView 控件中这一步是必不可少的。如果忽略这一点，就只有TreeView 控件的最上层 ItemsPresenter中元素才会实现 UI 实时更新，其余下层的元素则无法正确响应 ObservableCollection 的更改。
+_CupertinoTreeItem.cs, FindParentItem_
+
+```chsarp
+private FileItem FindParentItem(CupertinoTreeItem item)
+{
+    var parent = VisualTreeHelper.GetParent(item);
+
+    while (parent != null)
+    {
+        if (parent is CupertinoTreeItem parentTreeItem 
+            && parentTreeItem.DataContext is FileItem parentData)
+        {
+            if (parentData.Children.Contains(item.DataContext as FileItem))
+            {
+                return parentData;
+            }
+        }
+
+        parent = VisualTreeHelper.GetParent(parent);
+    }
+
+    return null;
+}
+```
