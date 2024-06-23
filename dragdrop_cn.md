@@ -58,3 +58,14 @@ private void CupertinoTreeItem_MouseMove(object sender, MouseEventArgs e)
     }
 }
 ```
+定义 DataObject 时，比起只指定所需的数据，将自身（this）作为数据传递更为有效。这是因为在拖放过程中需要找到拖动目标的父级，并且实现从父级中移除相应 TreeViewItem的功能。所以在定义 ‘DataObject’ 的时候，与其定义绑定数据，不如传递 ‘sender’ 或者 ‘this’ 即 ‘CupertinoTreeItem’，因为这样可以通过 ‘DataContext’ 找到绑定的数据，这种方式既高效又实用。
+
+### 阻止事件冒泡
+由于 WPF 的事件特性，‘MouseMove’ 事件会传递到上层的 ‘TreeViewItem’，最终会执行最上层 ’TreeViewItem‘ 对象的 ’MouseMove‘ 事件。因此，在拖动事件正常处理后，需要通过设置 ‘e.Handled = true’; 来立即停止事件的冒泡。
+
+在 CupertinoTreeItem.cs 中的 MouseMove 方法中添加：
+
+```csharp
+e.Handled = true;
+```
+如果忽略了这一点，不论拖动哪个对象，最终都会选择最上层的 CupertinoTreeItem。当然在了解事件冒泡事件的特性后，你就能很轻松地察觉到这个问题。
