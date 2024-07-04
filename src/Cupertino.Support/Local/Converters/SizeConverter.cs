@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -18,7 +14,7 @@ namespace Cupertino.Support.Local.Converters
             double size = long.Parse(value.ToString());
             int unit = 0;
 
-            while (size >= 1024 && unit < 1)
+            while (size >= 1024 && unit < units.Length - 1)
             {
                 size /= 1024;
                 ++unit;
