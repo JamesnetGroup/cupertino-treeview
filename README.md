@@ -1,6 +1,109 @@
-![CupertinoGif1](https://github.com/vickyqu115/cupertino-treeview/assets/101777355/b3f3aacd-6d96-4db9-b1d5-8bdd6cf3e2e0)
+# Cupertino TreeView [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md) [![한국어](https://img.shields.io/badge/Language-한국어-red.svg)](README.ko.md) [![中文](https://img.shields.io/badge/Language-中文-red.svg)](README.zh-CN.md)
 
-This article covers the content of Vicky's sixth WPF tutorial series video, which provides a detailed technical tutorial lasting an hour, available for free on YouTube and Bilibili. Additionally, the source code is shared on [GitHub](https://github.com/vickyqu115/cupertino-treeview). We welcome your support through [Stars](https://github.com/vickyqu115/cupertino-treeview/stargazers), participation via [Forks](https://github.com/vickyqu115/cupertino-treeview/forks), and communication through [Discussions](https://github.com/vickyqu115/cupertino-treeview/discussions).
+An advanced custom TreeView control implemented in WPF, offering a modern and flexible solution for complex hierarchical data structures
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/download)
+[![Stars](https://img.shields.io/github/stars/vickyqu115/cupertino-treeview.svg)](https://github.com/vickyqu115/cupertino-treeview/stargazers)
+[![Issues](https://img.shields.io/github/issues/vickyqu115/cupertino-treeview.svg)](https://github.com/vickyqu115/cupertino-treeview/issues)
+
+## Project Overview
+
+Cupertino TreeView is an advanced CustomControl that reconstructs and extends the basic TreeView control in WPF. Utilizing a unique structure that inherits from ItemsControl, it effectively represents complex hierarchical data while applying the MVVM pattern to provide an excellent user experience and developer-friendly structure.
+
+<img src="https://github.com/vickyqu115/cupertino-treeview/assets/101777355/b3f3aacd-6d96-4db9-b1d5-8bdd6cf3e2e0" width="100%"/>
+
+## Key Features and Technical Implementation
+
+#### 1. Advanced CustomControl Development
+- [x] Utilization of special hierarchical structure of TreeView and TreeViewItem inheriting from ItemsControl
+- [x] Complete reconstruction of TreeView as a CustomControl
+- [x] Implementation of Expand functionality using ToggleButton
+
+#### 2. MVVM Pattern Integration
+- [x] Management of data and business logic through ViewModel
+- [x] Event handling using ICommand DependencyProperty
+- [x] MVVM-friendly handling of TreeViewItem events through bubbling
+
+#### 3. Application of Advanced WPF Techniques
+- [x] Visual representation of hierarchical structure using IValueConverter
+- [x] Support for infinite hierarchical structures through complex ItemsPresenter design
+- [x] Dynamic UI updates using triggers and data triggers
+
+#### 4. Performance and User Experience Optimization
+- [x] Application of UI virtualization techniques for efficient item rendering
+- [x] Sophisticated visual representation of MouseOver and IsSelected states
+
+#### 5. File System Modeling
+- [x] Creation of demo data mimicking actual file system structures
+- [x] Handling of deep folder structures through recursive algorithms
+
+## In-Depth Technical Analysis
+
+- **Dual Role of TreeView and TreeViewItem**: Implementation of a unique structure where both controls inherit from ItemsControl, simultaneously performing parent and child roles
+- **Hierarchical Structure Visualization**: Automatic calculation of indentation for each item based on depth using DepthConverter
+- **Event Bubbling and MVVM**: Implementation of a pattern where TreeViewItem events are propagated upwards through bubbling and handled in ViewModel via ICommand
+- **Dynamic UI Updates**: Implementation of UI updates triggered by state changes such as IsExpanded, IsSelected, etc.
+- **File System Modeling**: Implementation of recursive data model and generation logic mimicking actual file system structures
+
+## Tech Stack
+
+- WPF (Windows Presentation Foundation)
+- .NET 8.0
+- C# 10.0
+- XAML
+
+## Getting Started
+
+### Prerequisites
+
+- Visual Studio 2022 or later
+- .NET 8.0 SDK
+
+### Installation and Execution
+
+#### 1. Clone the repository:
+
+```
+git clone https://github.com/vickyqu115/cupertino-treeview.git
+```
+
+#### 2. Open the solution
+- [x] Visual Studio
+- [x] Visual Studio Code
+- [x] JetBrains Rider
+
+<img src="https://github.com/user-attachments/assets/af70f422-7057-4e77-a54d-042ee8358d2a" width="32%"/>
+<img src="https://github.com/user-attachments/assets/e4feaa10-a107-4b58-8d13-1d8be620ec62" width="32%"/>
+<img src="https://github.com/user-attachments/assets/5ff487f6-55e4-43e1-9abf-f8d419ee6943" width="32%"/>
+
+#### 3. Build and Run
+- [x] Set as startup project
+- [x] Press F5 or click the run button
+- [x] Windows 11 recommended
+
+## Learning Resources
+
+- [Detailed implementation article (jamesnet.dev)](https://jamesnet.dev/article/112)
+- [BiliBili Tutorial (Chinese)](https://bit.ly/46AQp9Z)
+
+## Contributing
+
+Contributions to Cupertino TreeView are welcome! Please feel free to submit issues, create pull requests, or suggest improvements.
+
+## License
+
+This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+- Website: https://jamesnet.dev
+- Email: vickyqu115@hotmail.com, james@jamesnet.dev
+
+Experience advanced WPF control development and practical application of the MVVM pattern with Cupertino TreeView!
+
+
+------
 
 ## Why Customizing TreeView in WPF is Necessary
 
