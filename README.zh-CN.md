@@ -1,73 +1,73 @@
 # Cupertino TreeView [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md) [![한국어](https://img.shields.io/badge/Language-한국어-red.svg)](README.ko.md) [![中文](https://img.shields.io/badge/Language-中文-red.svg)](README.zh-CN.md)
 
-An advanced custom TreeView control implemented in WPF, offering a modern and flexible solution for complex hierarchical data structures
+在WPF中实现的高级自定义TreeView控件，为复杂的层次结构数据提供现代化且灵活的解决方案
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://img.shields.io/badge/.NET-8.0-blue.svg)](https://dotnet.microsoft.com/download)
 [![Stars](https://img.shields.io/github/stars/vickyqu115/cupertino-treeview.svg)](https://github.com/vickyqu115/cupertino-treeview/stargazers)
 [![Issues](https://img.shields.io/github/issues/vickyqu115/cupertino-treeview.svg)](https://github.com/vickyqu115/cupertino-treeview/issues)
 
-## Project Overview
+## 项目概述
 
-Cupertino TreeView is an advanced CustomControl that reconstructs and extends the basic TreeView control in WPF. Utilizing a unique structure that inherits from ItemsControl, it effectively represents complex hierarchical data while applying the MVVM pattern to provide an excellent user experience and developer-friendly structure.
+Cupertino TreeView是一个高级CustomControl，重构并扩展了WPF的基本TreeView控件。利用继承自ItemsControl的独特结构，有效地表示复杂的层次数据，同时应用MVVM模式，提供出色的用户体验和开发人员友好的结构。
 
 <img src="https://github.com/vickyqu115/cupertino-treeview/assets/101777355/b3f3aacd-6d96-4db9-b1d5-8bdd6cf3e2e0" width="100%"/>
 
-## Key Features and Technical Implementation
+## 主要特性和技术实现
 
-#### 1. Advanced CustomControl Development
-- [x] Utilization of special hierarchical structure of TreeView and TreeViewItem inheriting from ItemsControl
-- [x] Complete reconstruction of TreeView as a CustomControl
-- [x] Implementation of Expand functionality using ToggleButton
+#### 1. 高级CustomControl开发
+- [x] 利用TreeView和TreeViewItem继承自ItemsControl的特殊层次结构
+- [x] 将TreeView完全重构为CustomControl
+- [x] 使用ToggleButton实现Expand功能
 
-#### 2. MVVM Pattern Integration
-- [x] Management of data and business logic through ViewModel
-- [x] Event handling using ICommand DependencyProperty
-- [x] MVVM-friendly handling of TreeViewItem events through bubbling
+#### 2. MVVM模式集成
+- [x] 通过ViewModel管理数据和业务逻辑
+- [x] 使用ICommand DependencyProperty处理事件
+- [x] 通过冒泡实现MVVM友好的TreeViewItem事件处理
 
-#### 3. Application of Advanced WPF Techniques
-- [x] Visual representation of hierarchical structure using IValueConverter
-- [x] Support for infinite hierarchical structures through complex ItemsPresenter design
-- [x] Dynamic UI updates using triggers and data triggers
+#### 3. 应用高级WPF技术
+- [x] 使用IValueConverter实现层次结构的可视化表示
+- [x] 通过复杂的ItemsPresenter设计支持无限层次结构
+- [x] 使用触发器和数据触发器实现动态UI更新
 
-#### 4. Performance and User Experience Optimization
-- [x] Application of UI virtualization techniques for efficient item rendering
-- [x] Sophisticated visual representation of MouseOver and IsSelected states
+#### 4. 性能和用户体验优化
+- [x] 应用UI虚拟化技术实现高效的项目渲染
+- [x] MouseOver和IsSelected状态的精细可视化表现
 
-#### 5. File System Modeling
-- [x] Creation of demo data mimicking actual file system structures
-- [x] Handling of deep folder structures through recursive algorithms
+#### 5. 文件系统建模
+- [x] 创建模仿实际文件系统结构的演示数据
+- [x] 通过递归算法处理深层文件夹结构
 
-## In-Depth Technical Analysis
+## 技术深度分析
 
-- **Dual Role of TreeView and TreeViewItem**: Implementation of a unique structure where both controls inherit from ItemsControl, simultaneously performing parent and child roles
-- **Hierarchical Structure Visualization**: Automatic calculation of indentation for each item based on depth using DepthConverter
-- **Event Bubbling and MVVM**: Implementation of a pattern where TreeViewItem events are propagated upwards through bubbling and handled in ViewModel via ICommand
-- **Dynamic UI Updates**: Implementation of UI updates triggered by state changes such as IsExpanded, IsSelected, etc.
-- **File System Modeling**: Implementation of recursive data model and generation logic mimicking actual file system structures
+- **TreeView和TreeViewItem的双重角色**：实现一个独特的结构，两个控件都继承自ItemsControl，同时扮演父级和子级角色
+- **层次结构可视化**：使用DepthConverter自动计算每个项目基于深度的缩进
+- **事件冒泡和MVVM**：实现一种模式，通过冒泡将TreeViewItem事件向上传播，并通过ICommand在ViewModel中处理
+- **动态UI更新**：实现由IsExpanded、IsSelected等状态变化触发的UI更新
+- **文件系统建模**：实现模仿实际文件系统结构的递归数据模型和生成逻辑
 
-## Tech Stack
+## 技术栈
 
 - WPF (Windows Presentation Foundation)
 - .NET 8.0
 - C# 10.0
 - XAML
 
-## Getting Started
+## 入门指南
 
-### Prerequisites
+### 先决条件
 
-- Visual Studio 2022 or later
+- Visual Studio 2022 或更高版本
 - .NET 8.0 SDK
 
-### Installation and Execution
+### 安装和执行
 
-#### 1. Clone the repository:
+#### 1. 克隆仓库：
 
 ```
 git clone https://github.com/vickyqu115/cupertino-treeview.git
 ```
 
-#### 2. Open the solution
+#### 2. 打开解决方案
 - [x] Visual Studio
 - [x] Visual Studio Code
 - [x] JetBrains Rider
@@ -76,30 +76,30 @@ git clone https://github.com/vickyqu115/cupertino-treeview.git
 <img src="https://github.com/user-attachments/assets/e4feaa10-a107-4b58-8d13-1d8be620ec62" width="32%"/>
 <img src="https://github.com/user-attachments/assets/5ff487f6-55e4-43e1-9abf-f8d419ee6943" width="32%"/>
 
-#### 3. Build and Run
-- [x] Set as startup project
-- [x] Press F5 or click the run button
-- [x] Windows 11 recommended
+#### 3. 构建和运行
+- [x] 设置为启动项目
+- [x] 按F5或点击运行按钮
+- [x] 推荐使用Windows 11
 
-## Learning Resources
+## 学习资源
 
-- [Detailed implementation article (jamesnet.dev)](https://jamesnet.dev/article/112)
-- [BiliBili Tutorial (Chinese)](https://bit.ly/46AQp9Z)
+- [详细实现文章 (jamesnet.dev)](https://jamesnet.dev/article/112)
+- [BiliBili 教程 (中文)](https://bit.ly/46AQp9Z)
 
-## Contributing
+## 贡献
 
-Contributions to Cupertino TreeView are welcome! Please feel free to submit issues, create pull requests, or suggest improvements.
+欢迎对Cupertino TreeView做出贡献！请随时提交问题、创建拉取请求或提出改进建议。
 
-## License
+## 许可证
 
-This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+本项目基于MIT许可证分发。有关详细信息，请参阅[LICENSE](LICENSE)文件。
 
-## Contact
+## 联系方式
 
-- Website: https://jamesnet.dev
-- Email: vickyqu115@hotmail.com, james@jamesnet.dev
+- 网站：https://jamesnet.dev
+- 电子邮件：vickyqu115@hotmail.com, james@jamesnet.dev
 
-Experience advanced WPF control development and practical application of the MVVM pattern with Cupertino TreeView!
+使用Cupertino TreeView体验高级WPF控件开发和MVVM模式的实际应用！
 
 ------
 
