@@ -1,4 +1,4 @@
-# Cupertino TreeView [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md) [![한국어](https://img.shields.io/badge/Language-한국어-red.svg)](README.ko.md) [![中文](https://img.shields.io/badge/Language-中文-red.svg)](README.zh-CN.md)
+# Cupertino TreeView [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md) [![中文](https://img.shields.io/badge/Language-中文-red.svg)](README.zh-CN.md) [![한국어](https://img.shields.io/badge/Language-한국어-red.svg)](README.ko.md)
 
 在WPF中实现的高级自定义TreeView控件，为复杂的层次结构数据提供现代化且灵活的解决方案
 
